@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bo7mf585dedra"]
 
 [ext_resource type="Texture2D" uid="uid://cn8qwragr2wbb" path="res://imagens/Enemy.png" id="1_o3k7d"]
-[ext_resource type="Script" path="res://cenas/inimigo.gd" id="1_yv08l"]
+[ext_resource type="Script" path="res://scripts/inimigo.gd" id="1_yv08l"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_myps5"]
 size = Vector3(1, 1.25, 1)
@@ -9,11 +9,9 @@ size = Vector3(1, 1.25, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_8wx7o"]
 size = Vector3(1, 1.25, 1)
 
-[node name="Inimigo" type="CharacterBody3D" node_paths=PackedStringArray("navegacao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+[node name="Inimigo" type="CharacterBody3D" node_paths=PackedStringArray("navegacao") groups=["competidor"]]
 script = ExtResource("1_yv08l")
 point_radius = 3.0
-velocidade = 5.0
 navegacao = NodePath("NavigationAgent3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

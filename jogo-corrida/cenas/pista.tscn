@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://br3x1upubd1e1"]
+
+[ext_resource type="Script" path="res://scripts/pista.gd" id="1_itsqg"]
+[ext_resource type="Texture2D" uid="uid://f6pgbkienh4" path="res://imagens/Track2D.png" id="2_cq0jb"]
+[ext_resource type="PackedScene" uid="uid://e2f3e7bgwv0c" path="res://cenas/parte_do_caminho.tscn" id="3_oefm8"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_7vs0r"]
+vertices = PackedVector3Array(-62, 0.5, -62, -62, 0.5, 62, 62, 0.5, 62, 62, 0.5, -62)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_agd8h"]
+size = Vector2(125, 125)
+subdivide_width = 4
+subdivide_depth = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_as4k6"]
+albedo_texture = ExtResource("2_cq0jb")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_liv4b"]
+size = Vector3(125, 1, 125)
+
+[node name="Pista" type="Node3D" node_paths=PackedStringArray("caminho")]
+script = ExtResource("1_itsqg")
+caminho = NodePath("Caminho")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_7vs0r")
+
+[node name="Terreno" type="MeshInstance3D" parent="NavigationRegion3D"]
+mesh = SubResource("PlaneMesh_agd8h")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_as4k6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Terreno"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Terreno/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_liv4b")
+
+[node name="Caminho" type="Node3D" parent="."]
+
+[node name="ParteDoCaminho" parent="Caminho" instance=ExtResource("3_oefm8")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -39.5017, 0, 18.4087)
+
+[node name="ParteDoCaminho2" parent="Caminho" instance=ExtResource("3_oefm8")]
+transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 2.09846, 0, 25.7392)
+ordem = 1
+
+[node name="ParteDoCaminho3" parent="Caminho" instance=ExtResource("3_oefm8")]
+transform = Transform3D(-8.9407e-08, 0, 1, 0, 1, 0, -1, 0, -8.9407e-08, 19.1936, 0, 48.7945)
+ordem = 2
+
+[node name="ParteDoCaminho4" parent="Caminho" instance=ExtResource("3_oefm8")]
+transform = Transform3D(-0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, 46.4015, -2, 30.8879)
+ordem = 3
+
+[node name="ParteDoCaminho5" parent="Caminho" instance=ExtResource("3_oefm8")]
+transform = Transform3D(-1, 0, -1.49012e-07, 0, 1, 0, 1.49012e-07, 0, -1, 35.222, -2, -26.7435)
+ordem = 4
+
+[node name="ParteDoCaminho6" parent="Caminho" instance=ExtResource("3_oefm8")]
+transform = Transform3D(1.78814e-07, 0, -1, 0, 1, 0, 1, 0, 1.78814e-07, 26.6428, 0.656105, -48.9792)
+ordem = 5
+
+[node name="ParteDoCaminho7" parent="Caminho" instance=ExtResource("3_oefm8")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -7.05312, 0.656105, -42.1379)
+ordem = 6
+
+[node name="ParteDoCaminho8" parent="Caminho" instance=ExtResource("3_oefm8")]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -40.9747, 0.656109, -13.1297)
+ordem = 7

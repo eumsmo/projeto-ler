@@ -1,32 +1,23 @@
-[gd_scene load_steps=9 format=3 uid="uid://bu3sxctls1klj"]
+[gd_scene load_steps=7 format=3 uid="uid://bu3sxctls1klj"]
 
-[ext_resource type="Texture2D" uid="uid://f6pgbkienh4" path="res://imagens/Track2D.png" id="1_738ye"]
 [ext_resource type="PackedScene" uid="uid://cr3ir5vn3ckhq" path="res://cenas/jogador.tscn" id="1_f20cq"]
+[ext_resource type="PackedScene" uid="uid://br3x1upubd1e1" path="res://cenas/pista.tscn" id="1_fmd4q"]
+[ext_resource type="Script" path="res://scripts/jogo.gd" id="1_ubwmc"]
 [ext_resource type="PackedScene" uid="uid://bo7mf585dedra" path="res://cenas/inimigo.tscn" id="4_imf7c"]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_7vs0r"]
-vertices = PackedVector3Array(-62, 0.5, -62, -62, 0.5, 62, 62, 0.5, 62, 62, 0.5, -62)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+[sub_resource type="LabelSettings" id="LabelSettings_neqil"]
+font_size = 57
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_agd8h"]
-size = Vector2(125, 125)
-subdivide_width = 4
-subdivide_depth = 4
+[sub_resource type="LabelSettings" id="LabelSettings_nnu1c"]
+font_size = 24
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_as4k6"]
-albedo_texture = ExtResource("1_738ye")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_liv4b"]
-size = Vector3(125, 1, 125)
-
-[sub_resource type="Curve3D" id="Curve3D_xogys"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -43.305, 0, 16.385, 0, 0, 0, 0, 0, 0, -31.72, 0, 26.915, 0, 0, 0, 0, 0, 0, 6.24, 0, 30.76, 0, 0, 0, 0, 0, 0, 28.575, 0, 50.01, 0, 0, 0, 0, 0, 0, 48.035, 0, 30.71, 0, 0, 0, 0, 0, 0, 30.15, 0, 0, 0, 0, 0, 0, 0, 0, 37.65, 0, -46.105, 0, 0, 0, 0, 0, 0, -8.235, 0, -43.225, 0, 0, 0, 0, 0, 0, -36.725, 0, -14.545),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
-}
-point_count = 9
-
-[node name="Jogo" type="Node3D"]
+[node name="Jogo" type="Node3D" node_paths=PackedStringArray("pista", "jogador", "inimigos", "quantidade_voltas_txt", "quantidade_checkpoints_txt")]
+script = ExtResource("1_ubwmc")
+pista = NodePath("Pista")
+jogador = NodePath("Jogador")
+inimigos = [NodePath("Inimigo")]
+quantidade_voltas_txt = NodePath("Interface/QuantidadeVoltas")
+quantidade_checkpoints_txt = NodePath("Interface/QuantidadeCheckpoints")
 
 [node name="Interface" type="Control" parent="."]
 layout_mode = 3
@@ -34,30 +25,39 @@ anchors_preset = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 
-[node name="Pista" type="Node3D" parent="."]
+[node name="QuantidadeVoltas" type="Label" parent="Interface"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -87.0
+offset_bottom = 78.0
+grow_horizontal = 0
+text = "2/3"
+label_settings = SubResource("LabelSettings_neqil")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Pista"]
-navigation_mesh = SubResource("NavigationMesh_7vs0r")
+[node name="QuantidadeCheckpoints" type="Label" parent="Interface"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -115.0
+offset_top = 60.0
+offset_bottom = 105.0
+grow_horizontal = 0
+text = "1/10"
+label_settings = SubResource("LabelSettings_nnu1c")
+horizontal_alignment = 2
 
-[node name="Terreno" type="MeshInstance3D" parent="Pista/NavigationRegion3D"]
-mesh = SubResource("PlaneMesh_agd8h")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_as4k6")
+[node name="Pista" parent="." instance=ExtResource("1_fmd4q")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Pista/NavigationRegion3D/Terreno"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Pista/NavigationRegion3D/Terreno/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-shape = SubResource("BoxShape3D_liv4b")
-
-[node name="Path3D" type="Path3D" parent="Pista"]
-curve = SubResource("Curve3D_xogys")
-
-[node name="Jogador" parent="." instance=ExtResource("1_f20cq")]
+[node name="Jogador" parent="." node_paths=PackedStringArray("pista") instance=ExtResource("1_f20cq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 0, 0)
+pista = NodePath("../Pista")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.0922837, 0.995733, 0, -0.995733, 0.0922837, 0, 13, 0)
 
-[node name="Inimigo" parent="." node_paths=PackedStringArray("caminho") instance=ExtResource("4_imf7c")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 5)
-caminho = NodePath("../Pista/Path3D")
+[node name="Inimigo" parent="." node_paths=PackedStringArray("pista") instance=ExtResource("4_imf7c")]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -43, 0, 7)
+pista = NodePath("../Pista")

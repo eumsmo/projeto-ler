@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends Competidor
 
 
 @export var move_speed : float = 5 #Default 4
