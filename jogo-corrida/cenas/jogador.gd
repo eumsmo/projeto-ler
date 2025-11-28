@@ -10,9 +10,9 @@ extends CharacterBody3D
 @export_group("Aceleração")
 @export var acc : float = 0.0 #Initial Value
 @export var max_acc : float = 4.0
-@export var acc_power : float = 0.75 #Incremental Value
+@export var acc_power : float = 5.5 #Incremental Value
 
-@export var acc_rot := 0.5
+@export var acc_rot := 12.0
 @export var max_vel_rot := 3.0
 var rotacao_vel := 0.0
 
@@ -61,18 +61,12 @@ func get_input(delta):
 	
 	
 	acc -= acc_power * delta * 0.25
-		
 	acc = clamp(acc, 0, max_acc)
 	
-	print("acc: " + str(acc))
-	
-	var move_direction := Vector3.ZERO	
-	
-	rotacao_vel += acc_rot * curva
+	var move_direction := Vector3.ZERO
+	rotacao_vel += acc_rot * curva * delta
+	rotacao_vel -= sign(rotacao_vel) * acc_rot/2 * delta
 	rotacao_vel = clamp(abs(rotacao_vel), 0, max_vel_rot) * sign(rotacao_vel)
-	
-	if curva == 0:
-		rotacao_vel = 0
 	
 	rotate(Vector3.UP, (acc/max_acc) * rotacao_vel * delta)
 	

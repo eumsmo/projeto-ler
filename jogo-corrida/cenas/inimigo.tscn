@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo7mf585dedra"]
+
+[ext_resource type="Texture2D" uid="uid://cn8qwragr2wbb" path="res://imagens/Enemy.png" id="1_o3k7d"]
+[ext_resource type="Script" path="res://cenas/inimigo.gd" id="1_yv08l"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_myps5"]
+size = Vector3(1, 1.25, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8wx7o"]
+size = Vector3(1, 1.25, 1)
+
+[node name="Inimigo" type="CharacterBody3D" node_paths=PackedStringArray("navegacao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+script = ExtResource("1_yv08l")
+velocidade = 5.0
+navegacao = NodePath("NavigationAgent3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.628, 0)
+shape = SubResource("BoxShape3D_myps5")
+
+[node name="Image" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+billboard = 1
+texture = ExtResource("1_o3k7d")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.628472, 0)
+shape = SubResource("BoxShape3D_8wx7o")
