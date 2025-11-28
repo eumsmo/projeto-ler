@@ -60,8 +60,8 @@ func get_input(delta):
 		acc -= acc_power * 2 * delta
 	
 	
-	acc -= acc_power * delta * 0.25
-	acc = clamp(acc, 0, max_acc)
+	acc -= acc_power * delta * 0.25 * sign(acc)
+	acc = clamp(acc, -max_acc/2, max_acc)
 	
 	var move_direction := Vector3.ZERO
 	rotacao_vel += acc_rot * curva * delta

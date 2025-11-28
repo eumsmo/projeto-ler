@@ -12,6 +12,7 @@ size = Vector3(1, 1.25, 1)
 [node name="Inimigo" type="CharacterBody3D" node_paths=PackedStringArray("navegacao")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 script = ExtResource("1_yv08l")
+point_radius = 3.0
 velocidade = 5.0
 navegacao = NodePath("NavigationAgent3D")
 
