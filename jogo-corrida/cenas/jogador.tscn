@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cr3ir5vn3ckhq"]
+
+[ext_resource type="Script" path="res://cenas/jogador.gd" id="1_g0ixg"]
+[ext_resource type="Texture2D" uid="uid://dv1r3njmcte1y" path="res://imagens/Car.png" id="1_k65n1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_myps5"]
+size = Vector3(2.25, 1.25, 1)
+
+[node name="Jogador" type="CharacterBody3D"]
+script = ExtResource("1_g0ixg")
+
+[node name="Image" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+billboard = 1
+texture = ExtResource("1_k65n1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.628472, 0)
+shape = SubResource("BoxShape3D_myps5")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2, -3)
